@@ -263,7 +263,7 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate = 0.0001,
         # print(Z3.get_shape())
         # print(Y.get_shape())
 
-        compare = tf.abs(Z3 - Y) < 0.5 * Z3
+        compare = tf.abs(Z3 - Y) < 0.8 * Z3
         # pdb.set_trace()
         correct_prediction = tf.equal(compare, True)
         print(correct_prediction)
@@ -298,4 +298,4 @@ split = int(np.floor(m*0.95))
 # print(shuffled_X[:, split:].shape)
 # print(shuffled_Y[:, split:].shape)
 
-model(shuffled_X[:, :split], shuffled_Y[:, :split], shuffled_X[:, split:], shuffled_Y[:, split:], 0.1, 1500, 32, True)
+model(shuffled_X[:, :split], shuffled_Y[:, :split], shuffled_X[:, split:], shuffled_Y[:, split:], 0.05, 1500, 16, True)
