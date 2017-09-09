@@ -74,13 +74,15 @@ def initialize_parameters():
     """
     
     tf.set_random_seed(1)                   # so that your "random" numbers match ours
-        
+
+    hidden_units = [5, 2]
+
     ### START CODE HERE ### (approx. 6 lines of code)
-    W1 = tf.get_variable('W1', [10, 3], initializer=tf.contrib.layers.xavier_initializer(seed=1))
-    b1 = tf.get_variable('b1', [10, 1], initializer=tf.zeros_initializer())
-    W2 = tf.get_variable('W2', [5, 10], initializer=tf.contrib.layers.xavier_initializer(seed=1))
-    b2 = tf.get_variable('b2', [5, 1], initializer=tf.zeros_initializer())
-    W3 = tf.get_variable('W3', [1, 5], initializer=tf.contrib.layers.xavier_initializer(seed=1))
+    W1 = tf.get_variable('W1', [hidden_units[0], 3], initializer=tf.contrib.layers.xavier_initializer(seed=1))
+    b1 = tf.get_variable('b1', [hidden_units[0], 1], initializer=tf.zeros_initializer())
+    W2 = tf.get_variable('W2', [hidden_units[1], hidden_units[0]], initializer=tf.contrib.layers.xavier_initializer(seed=1))
+    b2 = tf.get_variable('b2', [hidden_units[1], 1], initializer=tf.zeros_initializer())
+    W3 = tf.get_variable('W3', [1, hidden_units[1]], initializer=tf.contrib.layers.xavier_initializer(seed=1))
     b3 = tf.get_variable('b3', [1, 1], initializer=tf.zeros_initializer())
     ### END CODE HERE ###
 
@@ -263,7 +265,7 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate = 0.0001,
         # print(Z3.get_shape())
         # print(Y.get_shape())
 
-        compare = tf.abs(Z3 - Y) < 0.8 * Z3
+        compare = tf.abs(Z3 - Y) < 0.9 * Z3
         # pdb.set_trace()
         correct_prediction = tf.equal(compare, True)
         print(correct_prediction)
@@ -291,11 +293,6 @@ permutation = list(np.random.permutation(m))
 shuffled_X = X[:, permutation].reshape(3,m)
 shuffled_Y = Y[:, permutation].reshape(1,m)
 
-split = int(np.floor(m*0.95))
+split = int(np.floor(m*0.8))
 
-# print(shuffled_X[:, :split].shape)
-# print(shuffled_Y[:, :split].shape)
-# print(shuffled_X[:, split:].shape)
-# print(shuffled_Y[:, split:].shape)
-
-model(shuffled_X[:, :split], shuffled_Y[:, :split], shuffled_X[:, split:], shuffled_Y[:, split:], 0.05, 1500, 16, True)
+model(shuffled_X[:, :split], shuffled_Y[:, :split], shuffled_X[:, split:], shuffled_Y[:, split:], 0.02, 2000, 10, True)
