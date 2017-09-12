@@ -24,3 +24,9 @@ questions:
 next step:
 
 normalize Y?
+
+
+
+
+simpler model?
+more data?
