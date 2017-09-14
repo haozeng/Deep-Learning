@@ -66,6 +66,7 @@ import tensorflow as tf
 
 import reader
 import util
+import pdb
 
 from tensorflow.python.client import device_lib
 
@@ -452,6 +453,7 @@ def main(_):
         % (len(gpus), FLAGS.num_gpus))
 
   raw_data = reader.ptb_raw_data(FLAGS.data_path)
+  #pdb.set_trace()
   train_data, valid_data, test_data, _ = raw_data
 
   config = get_config()
@@ -467,6 +469,8 @@ def main(_):
       train_input = PTBInput(config=config, data=train_data, name="TrainInput")
       with tf.variable_scope("Model", reuse=None, initializer=initializer):
         m = PTBModel(is_training=True, config=config, input_=train_input)
+        #pdb.set_trace()
+        print('haha')
       tf.summary.scalar("Training Loss", m.cost)
       tf.summary.scalar("Learning Rate", m.lr)
 

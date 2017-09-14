@@ -44,7 +44,7 @@ def _build_vocab(filename):
 
   words, _ = list(zip(*count_pairs))
   word_to_id = dict(zip(words, range(len(words))))
-  pdb.set_trace()
+  #pdb.set_trace()
   return word_to_id
 
 
@@ -80,7 +80,7 @@ def ptb_raw_data(data_path=None):
   train_data = _file_to_word_ids(train_path, word_to_id)
   valid_data = _file_to_word_ids(valid_path, word_to_id)
   test_data = _file_to_word_ids(test_path, word_to_id)
-  pdb.set_trace()
+  #pdb.set_trace()
   vocabulary = len(word_to_id)
   return train_data, valid_data, test_data, vocabulary
 
@@ -106,7 +106,7 @@ def ptb_producer(raw_data, batch_size, num_steps, name=None):
   """
   with tf.name_scope(name, "PTBProducer", [raw_data, batch_size, num_steps]):
     raw_data = tf.convert_to_tensor(raw_data, name="raw_data", dtype=tf.int32)
-
+    #pdb.set_trace()
     data_len = tf.size(raw_data)
     batch_len = data_len // batch_size
     data = tf.reshape(raw_data[0 : batch_size * batch_len],
@@ -126,4 +126,5 @@ def ptb_producer(raw_data, batch_size, num_steps, name=None):
     y = tf.strided_slice(data, [0, i * num_steps + 1],
                          [batch_size, (i + 1) * num_steps + 1])
     y.set_shape([batch_size, num_steps])
+    #pdb.set_trace()
     return x, y
